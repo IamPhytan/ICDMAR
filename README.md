@@ -1,4 +1,4 @@
-# Interface de Cnématique Directe pour les MAnipulateurs Redondants
+# Interface de Cinématique Directe pour les MAnipulateurs Redondants
 
 Interface de calcul de cinématique pour les manipulateurs redondants
 
