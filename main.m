@@ -33,6 +33,25 @@ end
 % Nombre de membres
 n = numel(contents{1});
 
+% Origine du tracé
+origine = [0, 0]
+
+% Création de la figure et maintien du tracé
+figure
+hold on
+
+for i=1:n
+    % Paramètres
+    long = contents{1}(i);
+    larg = contents{2}(i);
+    ang = contents{3}(i);
+    
+    origine = tracer_membre(i, origine(1), origine(2), long, larg, ang);
+
+    scatter(origine(1), origine(2), 'r')
+end
+
+scatter(origine(1), origine(2), 'g')
 
 
 
