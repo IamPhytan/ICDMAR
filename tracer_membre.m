@@ -41,7 +41,7 @@ p = patch(x, y,'w', 'EdgeColor', c);
 % rotation
 % direction()
 
-
+% TODO: ROTATION DE LA FIGURE
 
 
 % Coordonnées de fin
@@ -52,6 +52,6 @@ fin_y = orig_y + longueur * sin(angle);
 % Traçage de la ligne du membre
 plot([orig_x, fin_x], [orig_y, fin_y], '--', 'Color', c)
 
-
+% TODO: Changer axes
 
 end
