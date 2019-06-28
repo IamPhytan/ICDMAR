@@ -28,7 +28,7 @@ y = [y_min, y_min, y_max, y_max];
 
 % Couleurs
 
-couleurs = ['b', 'g', 'c', 'm', 'y', 'k'];
+couleurs = ['b', 'c', 'm', 'y', 'k'];
 % couleurs = ('b')
 
 c = couleurs(mod(idx, size(couleurs, 2)) + 1);
@@ -47,6 +47,11 @@ p = patch(x, y,'FaceColor', 'w', 'EdgeColor', c);
 % Coordonnées de fin
 fin_x = orig_x + longueur * cos(angle);
 fin_y = orig_y + longueur * sin(angle);
+
+
+% Traçage de la ligne du membre
+plot([orig_x, fin_x], [orig_y, fin_y], c, '--')
+
 
 
 end
