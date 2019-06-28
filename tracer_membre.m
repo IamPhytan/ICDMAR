@@ -35,7 +35,7 @@ c = couleurs(mod(idx, size(couleurs, 2)) + 1);
 
 
 % patch
-p = patch(x, y,'FaceColor', 'w', 'EdgeColor', c);
+p = patch(x, y,'w', 'EdgeColor', c);
 
 
 % rotation
@@ -50,7 +50,7 @@ fin_y = orig_y + longueur * sin(angle);
 
 
 % Traçage de la ligne du membre
-plot([orig_x, fin_x], [orig_y, fin_y], c, '--')
+plot([orig_x, fin_x], [orig_y, fin_y], '--', 'Color', c)
 
 
 
