@@ -1,7 +1,7 @@
-function [fin_x, fin_y] = tracer_membre(idx, orig_x, orig_y, longueur, largeur, angle)
+function point_fin = tracer_membre(idx, orig_x, orig_y, longueur, largeur, ang)
 % tracer_membre - Trace un membre d'un manipulateur sériel, à partir de son origine et de sa taille.
 %
-% Syntax: [fin_x, fin_y] = tracer_membre(idx, orig_x, orig_y, longueur, largeur, angle)
+% Syntax: point_fin = tracer_membre(idx, orig_x, orig_y, longueur, largeur, ang)
 %
 % Trace un membre d'un manipulateur sériel, à partir de son origine et de sa taille.
 % 
@@ -12,7 +12,7 @@ function [fin_x, fin_y] = tracer_membre(idx, orig_x, orig_y, longueur, largeur, 
 % param orig_y     : Coordonnée en y de l'origine du membre
 % param largeur    : Largeur du membre
 % param longueur   : Longueur du membre
-% param angle      : Angle du membre par rapport à l'axe des x (en degrés)
+% param ang        : ang du membre par rapport à l'axe des x (en degrés)
 
 % Positions
 
@@ -37,21 +37,22 @@ c = couleurs(mod(idx, size(couleurs, 2)) + 1);
 % patch
 p = patch(x, y,'w', 'EdgeColor', c);
 
+% ROTATION DE LA FIGURE
 
-% rotation
-% direction()
+direction = [0, 0, 1];
+pnt_rotation = [orig_x, orig_y, 0];
 
-% TODO: ROTATION DE LA FIGURE
-
+rotate(p, direction, ang, pnt_rotation)
 
 % Coordonnées de fin
-fin_x = orig_x + longueur * cos(angle);
-fin_y = orig_y + longueur * sin(angle);
-
+fin_x = orig_x + longueur * cos(deg2rad(ang));
+fin_y = orig_y + longueur * sin(deg2rad(ang));
 
 % Traçage de la ligne du membre
 plot([orig_x, fin_x], [orig_y, fin_y], '--', 'Color', c)
 
-% TODO: Changer axes
+% Retour de la fin
+point_fin = [fin_x, fin_y];
+
 
 end
