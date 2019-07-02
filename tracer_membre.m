@@ -39,6 +39,9 @@ p = patch(x, y,'w', 'EdgeColor', c);
 
 % ROTATION DE LA FIGURE
 
+% TODO: Angles relatifs
+% TODO: Update config.txt with relative angles
+
 direction = [0, 0, 1];
 pnt_rotation = [orig_x, orig_y, 0];
 
