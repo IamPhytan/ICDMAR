@@ -54,9 +54,7 @@ for i=1:n
 
 end
 
-% TODO: Axes
-
-% Dessin des axes
+% AXES
 
 % Fonction pour dessiner des flèches
 drawArrow = @(x,y, varargin) quiver( x(1),y(1),x(2)-x(1),y(2)-y(1),0, varargin{:} );
@@ -69,17 +67,16 @@ ax_y_max = round(max(values.('y')), -1) + 10;
 ax_x_min = round(min(values.('x')), -1) - 10;
 ax_y_min = round(min(values.('y')), -1) - 10;
 
-% % Dessin de la flèche d'axe
-% drawArrow([0, ax_x_max], [0, 0], 'MaxHeadSize',0.8, 'linewidth',3,'color','r')
-% drawArrow([0, 0], [0, ax_y_max], 'MaxHeadSize',0.8, 'linewidth',3,'color','r')
-
+% Dessin de la flèche d'axe
+x_arrow = drawArrow([0, ax_x_max], [0, 0], 'linewidth',3,'color','k');
+y_arrow_head_size = (x_arrow.MaxHeadSize * ax_x_max) / ax_y_max ;
+drawArrow([0, 0], [0, ax_y_max], 'MaxHeadSize', y_arrow_head_size, 'linewidth',3,'color','k')
 
 % Limites d'axe
 xlim([ax_x_min, ax_x_max])
 ylim([ax_y_min, ax_y_max])
 
-
-% Joints du manipulateur sériel
+% JOINTS du manipulateur sériel
 scatter(values.('x')(1), values.('y')(1), 'k', 'filled')
 scatter(values.('x')(2:end-1), values.('y')(2:end-1), 'r', 'filled')
 scatter(values.('x')(end), values.('y')(end), 'g', 'filled')
@@ -87,4 +84,6 @@ scatter(values.('x')(end), values.('y')(end), 'g', 'filled')
 % OUTPUT des valeurs
 fprintf('\n\nCoordonnees de l''organe terminal\n===============\n\nx: %f, y: %f\n\n\n', round(values.('x')(end), 3), round(values.('y')(end), 3))
 
+% Sauvegarde de la figure dans un fichier
+saveas(gcf, 'geometrie_directe.png')
 
