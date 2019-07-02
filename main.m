@@ -60,12 +60,12 @@ end
 drawArrow = @(x,y, varargin) quiver( x(1),y(1),x(2)-x(1),y(2)-y(1),0, varargin{:} );
 
 % Valeurs minimales des axes
-ax_x_max = round(max(values.('x')), -1) + 10;
-ax_y_max = round(max(values.('y')), -1) + 10;
+ax_x_max = round(max(values.('x')), -1) + 5;
+ax_y_max = round(max(values.('y')), -1) + 5;
 
 % % Valeurs maximales des axes
-ax_x_min = round(min(values.('x')), -1) - 10;
-ax_y_min = round(min(values.('y')), -1) - 10;
+ax_x_min = round(min(values.('x')), -1) - 5;
+ax_y_min = round(min(values.('y')), -1) - 5;
 
 % Dessin de la flèche d'axe
 x_arrow = drawArrow([0, ax_x_max], [0, 0], 'linewidth',3,'color','k');
@@ -77,7 +77,7 @@ xlim([ax_x_min, ax_x_max])
 ylim([ax_y_min, ax_y_max])
 
 % JOINTS du manipulateur sériel
-scatter(values.('x')(1), values.('y')(1), 'k', 'filled')
+scatter(values.('x')(1), values.('y')(1), 200, 'k', 'filled')
 scatter(values.('x')(2:end-1), values.('y')(2:end-1), 'r', 'filled')
 scatter(values.('x')(end), values.('y')(end), 'g', 'filled')
 
