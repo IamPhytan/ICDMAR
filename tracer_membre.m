@@ -33,8 +33,7 @@ couleurs = ('b');
 
 c = couleurs(mod(idx, size(couleurs, 2)) + 1);
 
-
-% patch
+% RECTANGLE EN PATCH
 p = patch(x, y,'w', 'EdgeColor', c);
 
 % ROTATION DE LA FIGURE
