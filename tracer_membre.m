@@ -25,7 +25,6 @@ y_max = orig_y + largeur / 2;
 x = [x_min, x_max, x_max, x_min];
 y = [y_min, y_min, y_max, y_max];
 
-
 % Couleurs
 
 % couleurs = ['b', 'c', 'm', 'y'];
