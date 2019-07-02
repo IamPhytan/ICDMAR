@@ -70,9 +70,19 @@ data.('long') = data.('long')(2:end);
 data.('larg') = data.('larg')(2:end);
 data.('ang') = data.('ang')(2:end);
 
-% AXES
 
-% TODO: Add range
+% JOINTS du manipulateur sériel
+tracer_cercle(values.('x')(1), values.('y')(1), data.('larg')(1), 'k')
+
+for idx=2:(numel(values.('x'))-1)
+    taille = max(data.('larg')(idx - 1), data.('larg')(idx));
+    tracer_cercle(values.('x')(idx), values.('y')(idx), taille, 'r')
+end
+
+tracer_cercle(values.('x')(end), values.('y')(end), data.('larg')(end), 'g')
+
+
+% AXES
 arm_range = sum(data.('long'));
 window_range = round(arm_range, -1) + 10;
 
@@ -87,12 +97,6 @@ drawArrow([0, 0], [0, window_range], 'linewidth',3,'color','k')
 xlim([-window_range, window_range])
 ylim([-window_range, window_range])
 
-% TODO: Update size of joints according to max() between both
-
-% JOINTS du manipulateur sériel
-tracer_cercle(values.('x')(1), values.('y')(1), data.('larg')(1), 'k')
-scatter(values.('x')(2:end-1), values.('y')(2:end-1), 'r', 'filled')
-scatter(values.('x')(end), values.('y')(end), 'g', 'filled')
 
 % OUTPUT des valeurs
 fprintf('\n\nCoordonnees de l''organe terminal\n===============\n\nx: %f, y: %f\n\n\n', round(values.('x')(end), 3), round(values.('y')(end), 3))
