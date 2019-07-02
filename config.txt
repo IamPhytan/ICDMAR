@@ -10,7 +10,7 @@ Par exemple, pour un membre long de 5 unités, large de 2 unités, avec un angle
 
 ******************************************
 6 2 20
-8 3 30
+8 3 -30
 4 1 60
-7 2 10
+7 2 -10
 8 1 8
