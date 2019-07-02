@@ -55,7 +55,7 @@ for i=1:n
     larg = contents{2}(i);
     ang = contents{3}(i);
     
-    fin_pnts = tracer_membre(i, values.('x')(end), values.('y')(end), long, larg, data.('long')(end) + ang);
+    fin_pnts = tracer_membre(i, values.('x')(end), values.('y')(end), long, larg, data.('ang')(end) + ang);
     values.('x') = [values.('x'), fin_pnts(1)];
     values.('y') = [values.('y'), fin_pnts(2)];
 
@@ -73,6 +73,8 @@ data.('ang') = data.('ang')(2:end);
 % AXES
 
 % TODO: Add range
+arm_range = sum(data.('long'));
+window_range = round(arm_range, -1) + 10;
 
 % Fonction pour dessiner des flèches
 drawArrow = @(x,y, varargin) quiver( x(1),y(1),x(2)-x(1),y(2)-y(1),0, varargin{:} );
@@ -100,7 +102,7 @@ ylim([ax_y_min, ax_y_max])
 % TODO: Update size of joints according to max() between both
 
 % JOINTS du manipulateur sériel
-scatter(values.('x')(1), values.('y')(1), 200, 'k', 'filled')
+tracer_cercle(values.('x')(1), values.('y')(1), data.('larg')(1), 'k')
 scatter(values.('x')(2:end-1), values.('y')(2:end-1), 'r', 'filled')
 scatter(values.('x')(end), values.('y')(end), 'g', 'filled')
 
