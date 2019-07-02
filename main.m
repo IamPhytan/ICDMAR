@@ -16,7 +16,7 @@ for i=1:numel(contents)
 end
 
 if ~(range(num_elems) == 0)
-    [~, I] = min(num_elems)
+    [~, I] = min(num_elems);
     switch I
         case 1
             nom_colu = "de longueur";
@@ -34,8 +34,8 @@ end
 n = numel(contents{1});
 
 % Origine du tracé
-values.('x') = [0];
-values.('y') = [0];
+values.('x') = 0;
+values.('y') = 0;
 
 % Création de la figure et maintien du tracé
 figure
@@ -83,4 +83,8 @@ ylim([ax_y_min, ax_y_max])
 scatter(values.('x')(1), values.('y')(1), 'k', 'filled')
 scatter(values.('x')(2:end-1), values.('y')(2:end-1), 'r', 'filled')
 scatter(values.('x')(end), values.('y')(end), 'g', 'filled')
+
+% OUTPUT des valeurs
+fprintf('\n\nCoordonnees de l''organe terminal\n===============\n\nx: %f, y: %f\n\n\n', round(values.('x')(end), 3), round(values.('y')(end), 3))
+
 
