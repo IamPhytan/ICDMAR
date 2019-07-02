@@ -28,8 +28,8 @@ y = [y_min, y_min, y_max, y_max];
 
 % Couleurs
 
-couleurs = ['b', 'c', 'm', 'y'];
-% couleurs = ('b')
+% couleurs = ['b', 'c', 'm', 'y'];
+couleurs = ('b');
 
 c = couleurs(mod(idx, size(couleurs, 2)) + 1);
 
