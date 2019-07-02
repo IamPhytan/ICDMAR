@@ -33,14 +33,21 @@ end
 % Nombre de membres
 n = numel(contents{1});
 
-% Origine du tracé
+% Valeurs de x et y
 values.('x') = 0;
 values.('y') = 0;
 
 % Création de la figure et maintien du tracé
 figure
+axis equal
 grid on
 hold on
+
+% Dict des données
+data.('long') = 0;
+data.('larg') = 0;
+data.('ang') = 0;
+
 
 for i=1:n
     % Paramètres
@@ -48,13 +55,24 @@ for i=1:n
     larg = contents{2}(i);
     ang = contents{3}(i);
     
-    fin_pnts = tracer_membre(i, values.('x')(end), values.('y')(end), long, larg, ang);
+    fin_pnts = tracer_membre(i, values.('x')(end), values.('y')(end), long, larg, data.('long')(end) + ang);
     values.('x') = [values.('x'), fin_pnts(1)];
     values.('y') = [values.('y'), fin_pnts(2)];
 
+    data.('long') = [data.('long'), long];
+    data.('larg') = [data.('larg'), larg];
+    data.('ang') = [data.('ang'), ang];
+
 end
 
+% Remove first data
+data.('long') = data.('long')(2:end);
+data.('larg') = data.('larg')(2:end);
+data.('ang') = data.('ang')(2:end);
+
 % AXES
+
+% TODO: Add range
 
 % Fonction pour dessiner des flèches
 drawArrow = @(x,y, varargin) quiver( x(1),y(1),x(2)-x(1),y(2)-y(1),0, varargin{:} );
@@ -63,18 +81,23 @@ drawArrow = @(x,y, varargin) quiver( x(1),y(1),x(2)-x(1),y(2)-y(1),0, varargin{:
 ax_x_max = round(max(values.('x')), -1) + 5;
 ax_y_max = round(max(values.('y')), -1) + 5;
 
-% % Valeurs maximales des axes
+% Valeurs maximales des axes
 ax_x_min = round(min(values.('x')), -1) - 5;
 ax_y_min = round(min(values.('y')), -1) - 5;
 
+% Normalisation des valeurs
+[ax_x_max, ax_y_max] = deal(max(ax_x_max, ax_y_max));
+[ax_x_min, ax_y_min] = deal(min(ax_x_min, ax_y_min));
+
 % Dessin de la flèche d'axe
-x_arrow = drawArrow([0, ax_x_max], [0, 0], 'linewidth',3,'color','k');
-y_arrow_head_size = (x_arrow.MaxHeadSize * ax_x_max) / ax_y_max ;
-drawArrow([0, 0], [0, ax_y_max], 'MaxHeadSize', y_arrow_head_size, 'linewidth',3,'color','k')
+drawArrow([0, ax_x_max], [0, 0], 'linewidth',3,'color','k')
+drawArrow([0, 0], [0, ax_y_max], 'linewidth',3,'color','k')
 
 % Limites d'axe
 xlim([ax_x_min, ax_x_max])
 ylim([ax_y_min, ax_y_max])
+
+% TODO: Update size of joints according to max() between both
 
 % JOINTS du manipulateur sériel
 scatter(values.('x')(1), values.('y')(1), 200, 'k', 'filled')
