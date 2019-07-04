@@ -41,9 +41,6 @@ if numel(contents{1}) == 0
     throw(ME)
 end
 
-
-celldisp(contents)
-
 % Verifie si toutes les colonnes ont le même nombre de valeurs
 num_colonnes = numel(contents);
 if num_colonnes ~= 3
