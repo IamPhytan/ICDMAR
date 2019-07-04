@@ -1,13 +1,53 @@
 
+
+config_file_path = [pwd filesep 'config.txt'];
+
+if ~isfile(config_file_path)
+    config_file_contents = "Configuration en cinematique directe des membres du manipulateur seriel" + newline;
+    config_file_contents = config_file_contents + "==============================================" + newline;
+    config_file_contents = config_file_contents + "Entrez vos parametres a partir de la ligne 12, apres la ligne de '*'" + newline;
+    config_file_contents = config_file_contents + "" + newline;
+    config_file_contents = config_file_contents + "Utilisez la syntaxe suivante :" + newline;
+    config_file_contents = config_file_contents + "<longueur> <largeur> <angle>" + newline;
+    config_file_contents = config_file_contents + "" + newline;
+    config_file_contents = config_file_contents + "Par exemple, pour un membre long de 5 unites, large de 2 unites, avec un angle de 60 degres par rapport au membre precedent :" + newline;
+    config_file_contents = config_file_contents + "5 2 60" + newline;
+    config_file_contents = config_file_contents + "" + newline;
+    config_file_contents = config_file_contents + "******************************************" + newline;
+    config_file_contents = config_file_contents + newline + newline + newline + newline + newline + newline;
+
+    fid = fopen(config_file_path, 'wt');
+    fprintf(fid, config_file_contents);
+    fclose(fid);
+
+    ME = MException('MATLAB:missingData', ...
+    ['Fichier de configuration manquant', newline, ...
+    'Veuillez ajouter vos valeurs au fichier de configuration qui fut cree au chemin suivant: <a href="matlab: open(''%s'')">%s</a>'], config_file_path, config_file_path);
+    throw(ME)
+end
+
+
 % Lecture du fichier de configuration
-fileID = fopen("./config.txt", 'r');
+fileID = fopen(config_file_path, 'r');
+% fileID = fopen("./config.txt", 'r');
 contents = textscan(fileID, '%f %f %f\r\n', 'HeaderLines', 11);
 fclose(fileID);
 
-% Vérifie si toutes les colonnes ont le même nombre de valeurs
+
+% Vérifie la présence de données dans le fichier
+if numel(contents{1}) == 0
+    ME = MException('MATLAB:missingData', ...
+    'Il manque des donnees dans le fichier de configuration (<a href="matlab: open(''%s'')">%s</a>)', config_file_path, config_file_path);
+    throw(ME)
+end
+
+
+celldisp(contents)
+
+% Verifie si toutes les colonnes ont le même nombre de valeurs
 num_colonnes = numel(contents);
 if num_colonnes ~= 3
-    warning("Une ligne du fichier de configuration a trop de données")
+    warning("Une ligne du fichier de configuration a trop de donnees")
 end
 
 num_elems = zeros(1, num_colonnes);
@@ -37,20 +77,20 @@ n = numel(contents{1});
 values.('x') = 0;
 values.('y') = 0;
 
-% Création de la figure et maintien du tracé
+% Creation de la figure et maintien du trace
 figure
 axis equal
 grid on
 hold on
 
-% Dict des données
+% Dict des donnees
 data.('long') = 0;
 data.('larg') = 0;
 data.('ang') = 0;
 
 
 for i=1:n
-    % Paramètres
+    % Parametres
     long = contents{1}(i);
     larg = contents{2}(i);
     ang = contents{3}(i);
@@ -71,7 +111,7 @@ data.('larg') = data.('larg')(2:end);
 data.('ang') = data.('ang')(2:end);
 
 
-% JOINTS du manipulateur sériel
+% JOINTS du manipulateur seriel
 tracer_cercle(values.('x')(1), values.('y')(1), data.('larg')(1), 'k')
 
 for idx=2:(numel(values.('x'))-1)
@@ -86,10 +126,10 @@ tracer_cercle(values.('x')(end), values.('y')(end), data.('larg')(end), 'g')
 arm_range = sum(data.('long'));
 window_range = round(arm_range, -1) + 10;
 
-% Fonction pour dessiner des flèches
+% Fonction pour dessiner des fleches
 drawArrow = @(x,y, varargin) quiver( x(1),y(1),x(2)-x(1),y(2)-y(1),0, varargin{:} );
 
-% Dessin de la flèche d'axe
+% Dessin de la fleche d'axe
 drawArrow([0, window_range], [0, 0], 'linewidth',3,'color','k')
 drawArrow([0, 0], [0, window_range], 'linewidth',3,'color','k')
 
