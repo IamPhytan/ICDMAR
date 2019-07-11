@@ -91,7 +91,7 @@ for i=1:n
     long = contents{1}(i);
     larg = contents{2}(i);
     ang = contents{3}(i);
-    
+
     fin_pnts = tracer_membre(i, values.('x')(end), values.('y')(end), long, larg, data.('ang')(end) + ang);
     values.('x') = [values.('x'), fin_pnts(1)];
     values.('y') = [values.('y'), fin_pnts(2)];
